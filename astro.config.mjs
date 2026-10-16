@@ -1,9 +1,30 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig } from "astro/config";
 
-import cloudflare from '@astrojs/cloudflare';
+import cloudflare from "@astrojs/cloudflare";
+
+import react from "@astrojs/react";
+import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  adapter: cloudflare()
+  adapter: cloudflare(),
+  security: {
+    checkOrigin: false,
+  },
+
+  integrations: [react()],
+
+  vite: {
+    optimizeDeps: {
+      include: ["react-dom/client"],
+    },
+    build: {
+      commonjsOptions: {
+        include: [/react-dom\/client/, /node_modules/],
+      },
+    },
+    // @ts-ignore
+    plugins: [tailwindcss()],
+  },
 });
