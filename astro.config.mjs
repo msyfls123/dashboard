@@ -11,6 +11,7 @@ export default defineConfig({
   adapter: cloudflare(),
   security: {
     checkOrigin: false,
+    actionBodySizeLimit: 20 * 1024 * 1024,
   },
 
   integrations: [react()],

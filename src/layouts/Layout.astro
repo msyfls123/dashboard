@@ -1,5 +1,7 @@
 ---
 import "../styles/global.css";
+
+const title = `${Astro.locals.title ?? "Dashboard"} | ebichu ❤️`;
 ---
 
 <!doctype html>
@@ -7,9 +9,9 @@ import "../styles/global.css";
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
+        <title>{title}</title>
     </head>
-    <body>
+    <body class="px-8 py-15">
         <slot />
     </body>
 </html>

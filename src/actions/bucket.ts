@@ -10,13 +10,17 @@ export const bucket = {
     }),
     handler: async (input) => {
       const data = await env.bucket.list({
-        limit: input.limit ?? 10,
+        limit: input.limit ?? 20,
         cursor: input.cursor
       })
-      return data.objects.map(item => ({
-        key: item.key,
-        size: item.size
-      }))
+      return {
+        objects: data.objects.map(item => ({
+          key: item.key,
+          size: item.size,
+          uploaded: item.uploaded
+        })),
+        cursor: data.truncated ? data.cursor : undefined
+      }
     }
   })
 }
