@@ -1,5 +1,4 @@
 ---
-import { actions } from "astro:actions";
 import Layout from "../../layouts/Layout.astro";
 
 import { BucketList } from "../../components/BucketList";
@@ -9,6 +8,8 @@ Astro.locals.title = "Bucket";
 ---
 
 <Layout>
-    <MultipartUpload client:load />
-    <BucketList client:load />
+    <div>
+        <MultipartUpload client:load />
+        <BucketList client:load />
+    </div>
 </Layout>

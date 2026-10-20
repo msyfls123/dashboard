@@ -5,10 +5,15 @@ import { env } from 'cloudflare:workers'
 export const upload = {
   create: defineAction({
     input: z.object({
-      key: z.string()
+      key: z.string(),
+      contentType: z.string(),
     }),
     handler: async (input) => {
-      const multipartUpload = await env.bucket.createMultipartUpload(input.key);
+      const multipartUpload = await env.bucket.createMultipartUpload(input.key, {
+        httpMetadata: {
+          contentType: input.contentType,
+        }
+      });
       return {
         key: multipartUpload.key,
         uploadId: multipartUpload.uploadId
@@ -25,9 +30,7 @@ export const upload = {
     }),
     handler: async ({ key, uploadId, file, partNumber }) => {
       const multipartUpload = env.bucket.resumeMultipartUpload(key, uploadId)
-      const arrayBuffer = await file.arrayBuffer();
-      const uint8Array = new Uint8Array(arrayBuffer);
-      const result = await multipartUpload.uploadPart(Number(partNumber), uint8Array)
+      const result = await multipartUpload.uploadPart(Number(partNumber), file)
       return {
         partNumber: result.partNumber,
         etag: result.etag

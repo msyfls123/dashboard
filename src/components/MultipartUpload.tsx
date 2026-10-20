@@ -18,7 +18,7 @@ export const MultipartUpload = () => {
 
   return (
     <div className="flex flex-col items-start space-y-8 mb-10">
-      <input type='file' ref={fileRef} className="w-100 h-30 border-2 border-dashed border-t-blue-500"/>
+      <input type='file' ref={fileRef} className="max-w-100 h-30 rounded-xl p-5 border-2 border-dashed border-blue-500 bg-blue-100"/>
       <button onClick={handleUpload} className="flex-none border-2 rounded border-border-t-emerald-600 p-1 px-3 hover:bg-emerald-700 hover:text-white">Start</button>
 
       <ul className="max-w-250 grid grid-cols-4 gap-8">

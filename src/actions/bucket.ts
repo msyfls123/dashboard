@@ -22,5 +22,5 @@ export const bucket = {
         cursor: data.truncated ? data.cursor : undefined
       }
     }
-  })
+  }),
 }

@@ -1,1 +1,7 @@
 @import "tailwindcss";
+
+@layer components {
+    .button {
+        @apply border-2 rounded px-3 border-amber-600 p-1 hover:bg-amber-700 hover:text-white
+    }
+}

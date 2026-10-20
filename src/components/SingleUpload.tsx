@@ -27,7 +27,7 @@ export const SingleUpload = ({ file, prefix, onDelete }: SingleUploadProps) => {
   const [result, setResult] = useState<Partial<R2Object> | null>(null)
 
   const handleUpload = useEffectEvent(async () => {
-    const uploadInit = await actions.upload.create({ key })
+    const uploadInit = await actions.upload.create({ key, contentType: file.type })
     if (!uploadInit.data?.uploadId) {
       setStatus(Status.Error)
       return
@@ -37,15 +37,11 @@ export const SingleUpload = ({ file, prefix, onDelete }: SingleUploadProps) => {
 
     for await (const index of Array.from({ length: chunkLength }).map((v, i) => i)) {
       const slicedBlob = file.slice(index * CHUNK_SIZE, (index + 1) * CHUNK_SIZE)
-      const arrayBuffer = await slicedBlob.arrayBuffer()
-      const uint8Array = new Uint8Array(arrayBuffer)
-      const blob = new Blob([uint8Array], { type: file.type });
-      // const blob = new Blob([uint8Array], { type: 'application/octet-stream' });
       const formData = new FormData()
       formData.append('key', key)
       formData.append('uploadId', uploadId)
       formData.append('partNumber', String(index + 1))
-      formData.append('file', blob)
+      formData.append('file', slicedBlob, key)
 
       setStatus(Status.Uploading)
       try {

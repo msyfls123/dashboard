@@ -13,6 +13,9 @@
 	"observability": {
 		"enabled": true
 	},
+	"secrets": {
+	  "required": ["ACCESS_KEY_ID", "SECRET_ACCESS_KEY"]
+	},
 	"r2_buckets": [
 		{
 			"bucket_name": "common",
