@@ -1,5 +1,7 @@
 import { actions } from "astro:actions";
+import { cn } from "@/utils/shadcn";
 import { startTransition, useCallback, useEffect, useEffectEvent, useMemo, useRef, useState } from "react";
+import { Button } from "./ui/button";
 
 interface SingleUploadProps {
   file: File
@@ -76,17 +78,27 @@ export const SingleUpload = ({ file, prefix, onDelete }: SingleUploadProps) => {
   }, [file])
 
   return (
-    <div className="p-3 rounded border border-t-blue-600">
-      <h3>{key}</h3>
-      <div className="flex flex-col">
+    <div className="p-3 rounded border bg-blue-100/50">
+      <h3 className="text-lg">
+        <span
+          className={cn(
+            'inline-block align-baseline mb-0.5 mr-2 rounded-full size-3',
+            status === Status.Idle && 'bg-cyan-500',
+            status === Status.Uploading && 'bg-amber-400',
+            status === Status.Error && 'bg-rose-600',
+            status === Status.Completed && 'bg-green-500',
+          )}
+        ></span>
+        <span className="break-all">{key}</span>
+      </h3>
+      <div className="flex flex-col mt-2 pt-2 border-t border-t-sky-800 border-dashed">
         <p>Status: {status}</p>
         <p>{uploadedCount} / {chunkLength}</p>
-        <p>{status === Status.Completed && result?.httpEtag}</p>
-        <button
-          className="mt-4 border-2 rounded border-border-t-rose-600 p-1 px-3 hover:bg-rose-700 hover:text-white"
+        <Button
+          variant="destructive"
           onClick={onDelete}
           disabled={[Status.Created, Status.Uploading].includes(status)}
-        >Delete</button>
+        >Delete</Button>
       </div>
     </div>
   )

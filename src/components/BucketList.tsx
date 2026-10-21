@@ -2,6 +2,8 @@ import { actions } from "astro:actions";
 import { useCallback, useEffect, useState } from "react";
 import { displaySize } from "../utils/file";
 import { LIST_LIMIT } from "../consts";
+import { Button } from "./ui/button";
+import { RefreshCcw } from 'lucide-react'
 
 export const BucketList = () => {
   const [cursor, setCursor] = useState<string | undefined>()
@@ -30,7 +32,8 @@ export const BucketList = () => {
     if (!item.key) return
     const search = `key=${encodeURIComponent(item.key)}&bucket=common`
     fetch(`https://r2.ebichu.cc?${search}`).then(res => res.json()).then((res: any) => {
-      window.open(res.url, '_blank')
+      const newUrl = res.url.replace('common.5cecff15026e2563fb5be47dece0997f.r2.cloudflarestorage.com', 'cdn-common.ebichu.cc')
+      window.open(newUrl, '_blank')
     })
   }, []);
 
@@ -40,31 +43,30 @@ export const BucketList = () => {
 
   return (
     <div className="max-w-250 space-y-5">
-      <button
+      <Button
         onClick={handleRefresh}
-        className="border-2 rounded border-amber-600 p-1 hover:bg-amber-700 hover:text-white"
       >
+        <RefreshCcw />
         Refresh List
-      </button>
+      </Button>
       <ul className="p-3 bg-amber-300 space-y-5">
         {list.map((item) => (
           <li key={item.key} className="bg-gray-100/50 p-3 space-x-3 space-y-3 grid grid-cols-2 md:grid-cols-4">
-            <span>{item.key}</span>
+            <span className="wrap-break-word">{item.key}</span>
             <span>{Number.isSafeInteger(item.size) ? displaySize(item.size ?? 0) : 'N/A'}</span>
             <span className="text-ellipsis">{item.uploaded?.toLocaleString()}</span>
             <span className="flex justify-end">
-              <button className="button" onClick={() => handleDownload(item)}>↓ Download</button>
+              <Button variant="outline" onClick={() => handleDownload(item)}>↓ Download</Button>
             </span>
           </li>
         ))}
       </ul>
       {cursor && (
-        <button
+        <Button
           onClick={handleLoadMore}
-          className="button border-amber-600 p-1 hover:bg-amber-700"
         >
           Load More
-        </button>
+        </Button>
       )}
     </div>
   );
