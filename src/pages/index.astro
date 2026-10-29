@@ -1,18 +1,65 @@
 ---
+import Layout from "../layouts/Layout.astro";
+// @ts-ignore
+import { greetings } from "code-mantras";
+
+const quote = greetings();
+
+const links = [
+    {
+        title: "Bucket",
+        url: "/bucket",
+    },
+    {
+        title: "COS",
+        url: "https://cos.ebichu.cc",
+    },
+    {
+        title: "Editor (WIP)",
+        url: "https://editor.ebichu.cc",
+    },
+];
 ---
 
-<html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="viewport" content="width=device-width" />
-        <meta name="generator" content={Astro.generator} />
-        <title>Astro</title>
-    </head>
-    <body>
-        <h1>Astro</h1>
+<Layout>
+    <main class="md:flex">
+        <aside class="flex-none w-full md:w-50 mb-10 mt-1">
+            {links.map((link) => (
+                <nav class="mb-1">
+                    <a
+                        href={link.url}
+                        class="hover:text-amber-50 hover:bg-emerald-600 py-1 px-2 inline-block rounded-xs"
+                        target={
+                            link.url.startsWith("http") ? "_blank" : "_self"
+                        }
+                    >
+                        {link.title}
+                    </a>
+                </nav>
+            ))}
+        </aside>
+        <article class="flex-1">
+            <section>
+                <h1
+                    data-length={quote.length}
+                    data-quote={quote}
+                    id="quote"
+                    class="font-extrabold text-5xl md:text-8xl md:pr-50"
+                >
+                    {quote}
+                </h1>
+            </section>
+        </article>
+    </main>
+    <script>
+        const element = document.getElementById("quote");
+        const range = document.createRange();
+        const selection = window.getSelection();
 
-        <a href="/bucket">Bucket</a>
-    </body>
-</html>
+        range.setStart(element!.childNodes[0], Number(element?.dataset.length));
+        range.collapse(true);
+
+        selection!.removeAllRanges();
+        selection!.addRange(range);
+    </script>
+</Layout>
