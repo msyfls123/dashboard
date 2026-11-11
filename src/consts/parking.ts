@@ -14,4 +14,4 @@ export const sortDates = (dates: string[]) => {
 
 export const DEFAULT_PREFIX = '20240925'
 export const MAX_KEY_LENGTH = 12
-export const CHARGING_URL_PATTERN = 'https://wx.klchong.cn/html/qrcode.html?{key}01'
+export const CHARGING_URL_PATTERN = 'http://wx.klchong.cn/html/qrcode.html?g={key}01'

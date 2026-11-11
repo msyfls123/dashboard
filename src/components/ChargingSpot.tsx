@@ -97,7 +97,7 @@ export const ChargingSpot = () => {
       {lastChargingSpots.map((spot) => (
         <li key={spot.date} className="flex justify-between items-center border-b first:border-t border-emerald-600 p-3">
           <span>{spot.date}</span>
-          <a href={CHARGING_URL_PATTERN.replace('{key}', spot.key)}>
+          <a href={CHARGING_URL_PATTERN.replace('{key}', spot.key)} target="_blank">
             <Button variant="outline">
                 <span>{spot.key}</span>
             </Button>
