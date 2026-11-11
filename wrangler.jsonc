@@ -1,25 +1,29 @@
 {
-	"$schema": "./node_modules/wrangler/config-schema.json",
-	"compatibility_date": "2026-10-12",
-	"compatibility_flags": [
-		"global_fetch_strictly_public"
-	],
-	"name": "dashboard",
-	"main": "@astrojs/cloudflare/entrypoints/server",
-	"assets": {
-		"directory": "./dist",
-		"binding": "ASSETS"
-	},
-	"observability": {
-		"enabled": true
-	},
-	"secrets": {
-	  "required": ["ACCESS_KEY_ID", "SECRET_ACCESS_KEY"]
-	},
-	"r2_buckets": [
-		{
-			"bucket_name": "common",
-			"binding": "bucket"
-		}
-	]
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "compatibility_date": "2026-10-12",
+  "compatibility_flags": [
+    "global_fetch_strictly_public"
+  ],
+  "name": "dashboard",
+  "main": "@astrojs/cloudflare/entrypoints/server",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "secrets": {
+    "required": ["ACCESS_KEY_ID", "SECRET_ACCESS_KEY"]
+  },
+  "r2_buckets": [
+    {
+      "bucket_name": "common",
+      "binding": "bucket"
+    }
+  ],
+  "kv_namespaces": [{
+    "binding": "CHARGING_SPOT_KV",
+    "id": "443321f8b5284877befd47c212b53fa7"
+  }],
 }

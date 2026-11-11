@@ -1,0 +1,13 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { ChargingSpot } from '../../components/ChargingSpot';
+
+Astro.locals.title = "Charging Spot";
+---
+
+<Layout>
+    <div>
+        Charging Spot
+        <ChargingSpot client:load/>
+    </div>
+</Layout>
